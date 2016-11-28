@@ -8,7 +8,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QObject::connect(ui->g_ch_1, SIGNAL (valueChanged(int)), this, SLOT(test2(int)));
+    QObject::connect(ui->g_ch_1, SIGNAL (valueChanged(int)), this, SLOT(g_han_1(int)));
+    QObject::connect(ui->g_ch_2, SIGNAL (valueChanged(int)), this, SLOT(g_han_2(int)));
+    QObject::connect(ui->g_ch_3, SIGNAL (valueChanged(int)), this, SLOT(g_han_3(int)));
+    QObject::connect(ui->g_ch_4, SIGNAL (valueChanged(int)), this, SLOT(g_han_4(int)));
+    QObject::connect(ui->g_ch_5, SIGNAL (valueChanged(int)), this, SLOT(g_han_5(int)));
+    QObject::connect(ui->g_ch_6, SIGNAL (valueChanged(int)), this, SLOT(g_han_6(int)));
+    QObject::connect(ui->g_ch_7, SIGNAL (valueChanged(int)), this, SLOT(g_han_7(int)));
+    QObject::connect(ui->g_ch_8, SIGNAL (valueChanged(int)), this, SLOT(g_han_8(int)));
+
+
     QObject::connect(ui->p48_1, SIGNAL (stateChanged(int)), this, SLOT(p48_han_1(int)));
     QObject::connect(ui->p48_2, SIGNAL (stateChanged(int)), this, SLOT(p48_han_2(int)));
     QObject::connect(ui->p48_3, SIGNAL (stateChanged(int)), this, SLOT(p48_han_3(int)));
@@ -112,40 +121,48 @@ void MainWindow::p48_han_8(int i)
 
 void MainWindow::g_han_1(int i)
 {
+    ui->d_ch_1->setText(QString::number((i*6)-10));
     con.gain(i,1);
 }
 
 void MainWindow::g_han_2(int i)
 {
+    ui->d_ch_2->setText(QString::number((i*6)-10));
     con.gain(i,2);
 }
 
 void MainWindow::g_han_3(int i)
 {
+    ui->d_ch_3->setText(QString::number((i*6)-10));
     con.gain(i,3);
 }
 
 void MainWindow::g_han_4(int i)
 {
+    ui->d_ch_4->setText(QString::number((i*6)-10));
     con.gain(i,4);
 }
 
 void MainWindow::g_han_5(int i)
 {
+    ui->d_ch_5->setText(QString::number((i*6)-10));
     con.gain(i,5);
 }
 
 void MainWindow::g_han_6(int i)
 {
+    ui->d_ch_6->setText(QString::number((i*6)-10));
     con.gain(i,6);
 }
 
 void MainWindow::g_han_7(int i)
 {
+    ui->d_ch_7->setText(QString::number((i*6)-10));
     con.gain(i,7);
 }
 
 void MainWindow::g_han_8(int i)
 {
+    ui->d_ch_8->setText(QString::number((i*6)-10));
     con.gain(i,8);
 }
