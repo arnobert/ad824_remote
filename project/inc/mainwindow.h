@@ -16,7 +16,6 @@ public:
     ~MainWindow();
 
 public slots:
-    void testbert();
     void test2(int XX);
 
     void p48_han_1(int i);
