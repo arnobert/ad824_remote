@@ -12,6 +12,6 @@ Initial release. Phantom Power (P48) working.
 
 To-Do:
 
--Gain
--Update GUI when changing settings on device
--Presets
+- Gain
+- Update GUI when changing settings on device
+- Presets
