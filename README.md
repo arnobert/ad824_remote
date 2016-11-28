@@ -8,7 +8,8 @@ I am only a hobby programmer, please excuse my bad programming style.
 Changelog:
 
 2016-11-28
-Initial release. Phantom Power (P48) working.
+Initial release. 
+- Phantom Power (P48) working.
 
 To-Do:
 
