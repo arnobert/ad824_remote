@@ -10,10 +10,11 @@ Changelog:
 2016-11-28
 Initial release. 
 - Phantom Power (P48) working.
+- Gain Setting working.
 
 To-Do:
 
-- Gain
+
 - Update GUI when changing settings on device
 - Presets
 - Support of two or more units in one chain
