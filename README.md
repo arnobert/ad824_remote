@@ -16,3 +16,4 @@ To-Do:
 - Gain
 - Update GUI when changing settings on device
 - Presets
+- Support of two or more units in one chain
