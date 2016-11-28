@@ -1,118 +1,62 @@
-#include "yam_code.h"
+#include <QtSerialPort/QtSerialPort>
+#ifndef YAM_CODE_H
+#define YAM_CODE_H
 
-YamCode::YamCode()
+
+#define CMD_P48 "21"
+#define CMD_GAIN "20"
+#define CMD_WCLK "10"
+#define CMD_ADDR "00"
+
+//namespace Ui {
+//class YamCode;
+//}
+
+class YamCode : public QObject
 {
-    //    n_bits = 0;
-    //    command = 0;
-    //    addr = 0;
-    //    data = 0;
-    //    checksum = 0;
+    Q_OBJECT
 
-    serial = new QSerialPort(this);
+public:
+    YamCode();
+    ~YamCode();
 
-}
+    void transmit(QByteArray cmd, QByteArray ad, QByteArray dat);
+    void test(void);
 
-YamCode::~YamCode()
-{
+public slots:
 
-}
+    void s_test(int XA, int XB);
 
+    void phantom_on(int chan);
+    void phantom_off(int chan);
 
-void YamCode::test(void)
-{
+    void gain(int g, int chan);
 
-    this->phantom(1,1);
-
-    this->phantom(1,2);
-    this->phantom(1,5);
-
-    this->phantom(0,2);
-    return;
-}
-
-void YamCode::s_test(int XA, int XB)
-{
-
-}
+signals:
 
 
-void YamCode::transmit(QByteArray cmd, QByteArray ad, QByteArray dat)
-{
-    bool ok;
-    QByteArray c_string;
-    int chk_sum, chk_sum_dat, c;
+private:
 
-    //c_ad = QByteArray::fromHex(int(ad));
+    QSerialPort *serial;
+    QString serialPortName = "/dev/ttyUSB0";
+    int serialPortBaudRate = QSerialPort::Baud38400;
 
-    c_string = cmd + ad + dat;
+    int n_bits;
+    int command;
+    int addr;
+    int data;
+    int checksum;
+    bool phantom_register[8]={false};
+    int gain_register[8];
 
-    int m_length;
+    int cur_ad = 0x01;
 
-    // Checksum::
+    void decode(int code);
 
-    m_length = c_string.length();
-
-    chk_sum_dat = 0;
-
-    for(c=0;c<dat.length();c++)
-        chk_sum_dat += dat[c];
-
-    chk_sum = 0xFF - (cmd[0] + ad[0] + chk_sum_dat);
-
-    c_string.append(chk_sum);
-
-    c_string = QByteArray::fromHex("0C") + c_string;
-
-    // Transmit
-    //c_string = QByteArray::fromHex("0C2101000101000000000000DB");
+    void phantom(bool power, int chan);
 
 
 
-    serial->setBaudRate(serialPortBaudRate);
-    serial->setPortName(serialPortName);
-    serial->open(QIODevice::ReadWrite);
-    serial->write(c_string);
-}
-void YamCode::phantom_on(int chan)
-{
-    phantom(1,chan);
-}
+};
 
-void YamCode::phantom_off(int chan)
-{
-    phantom(0,chan);
-}
-
-void YamCode::phantom(bool power, int chan)
-{
-    int i = 0;
-    //QByteArray MMA = QByteArray::fromHex("FA");
-
-    QByteArray p_sig = {};
-
-    if(chan<9)
-        phantom_register[chan-1] = power;
-
-    for(i=0;i<8;i++)
-    {
-        //p_sig.append(int(0));
-        if (phantom_register[i])
-            p_sig.append(int(1));
-        else
-            p_sig.append(int(0));
-    }
-
-    this->transmit(QByteArray::fromHex(CMD_P48),QByteArray::fromHex("0100"),p_sig);
-}
-
-void YamCode::gain(int g, int chan)
-{
-//    gain_register[chan-1] = g;
-}
-
-
-void YamCode::decode(int code)
-{
-
-}
-
+#endif // YAM_CODE_H
