@@ -6,6 +6,7 @@
 
 QT       += core gui\
             serialport\
+            network widgets\
             core
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,4 +22,5 @@ HEADERS  += mainwindow.h \
     yam_code.h
 
 FORMS    += mainwindow.ui
+
 
