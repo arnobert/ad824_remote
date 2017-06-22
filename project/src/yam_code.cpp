@@ -1,14 +1,33 @@
+/*
+Yamaha AD824 8-Channel Mic Preamp Remote Control - Remote Control Library
+Copyright (C) 2016, 2017 Arno Daeuper - arno.daeuper@mykolab.com
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/.
+
+*/
+
 #include "yam_code.h"
+
+/*
+ * Constructor
+ */
 
 YamCode::YamCode()
 {
-    //    n_bits = 0;
-    //    command = 0;
-    //    addr = 0;
-    //    data = 0;
-    //    checksum = 0;
-
     serial = new QSerialPort(this);
+
+    // TODO: Network connection
 
 }
 
@@ -17,6 +36,9 @@ YamCode::~YamCode()
 
 }
 
+/*
+ * Legacy testing funtion
+ */
 
 void YamCode::test(void)
 {
@@ -35,10 +57,12 @@ void YamCode::s_test(int XA, int XB)
 
 }
 
+/*
+ * Calculate the string to be sent
+ */
 
-void YamCode::transmit(QByteArray cmd, QByteArray ad, QByteArray dat)
+QByteArray YamCode::prepare_string(QByteArray cmd, QByteArray ad, QByteArray dat)
 {
-    bool ok;
     QByteArray c_string, length={};
     int chk_sum, chk_sum_dat, chk_sum_ad, c;
 
@@ -65,11 +89,35 @@ void YamCode::transmit(QByteArray cmd, QByteArray ad, QByteArray dat)
     chk_sum = 0xFF - (cmd[0] + chk_sum_ad + chk_sum_dat);
 
     c_string.append(chk_sum);
-
+    chk_sum = 0;
 
     c_string = length + c_string;
+    return c_string;
+}
 
-    chk_sum = 0;
+/*
+ * Send the data via network
+ */
+
+void YamCode::send_over_network(QByteArray cmd, QByteArray ad, QByteArray dat, QChar IP)
+{
+    QByteArray c_string;
+    c_string = prepare_string(cmd, ad, dat);
+
+    /*
+     * TODO: Send via network
+     */
+}
+
+/*
+ * Send the data via serial port
+ */
+
+void YamCode::transmit(QByteArray cmd, QByteArray ad, QByteArray dat)
+{
+
+    QByteArray c_string;
+    c_string = prepare_string(cmd, ad, dat);
 
 
     serial->setBaudRate(serialPortBaudRate);
@@ -86,6 +134,7 @@ void YamCode::phantom_off(int chan)
 {
     phantom(0,chan);
 }
+
 
 void YamCode::phantom(bool power, int chan)
 {
@@ -109,6 +158,10 @@ void YamCode::phantom(bool power, int chan)
     this->transmit(QByteArray::fromHex(CMD_P48),QByteArray::fromHex("0100"),p_sig);
 }
 
+/*
+ * Set Gain. TODO: Pick the correct address.
+ */
+
 void YamCode::gain(int g, int chan)
 {
     QByteArray abs_gain = {}, g_addr = {};
@@ -119,6 +172,10 @@ void YamCode::gain(int g, int chan)
     this->transmit(QByteArray::fromHex(CMD_GAIN),g_addr,abs_gain);
 }
 
+
+/*
+ * TODO:Function to decode any received data from the Preamp.
+ */
 
 void YamCode::decode(int code)
 {
