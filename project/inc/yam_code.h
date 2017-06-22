@@ -1,4 +1,5 @@
 #include <QtSerialPort/QtSerialPort>
+#include <QtNetwork>
 #ifndef YAM_CODE_H
 #define YAM_CODE_H
 
@@ -20,6 +21,8 @@ public:
     YamCode();
     ~YamCode();
 
+    QByteArray prepare_string(QByteArray cmd, QByteArray ad, QByteArray dat);
+    void send_over_network(QByteArray cmd, QByteArray ad, QByteArray dat, QChar IP);
     void transmit(QByteArray cmd, QByteArray ad, QByteArray dat);
     void test(void);
 
@@ -40,6 +43,8 @@ private:
     QSerialPort *serial;
     QString serialPortName = "/dev/ttyUSB0";
     int serialPortBaudRate = QSerialPort::Baud38400;
+
+
 
     int n_bits;
     int command;
