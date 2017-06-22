@@ -5,16 +5,19 @@ This project is written in C++ using Qt.
 
 I am only a hobby programmer, please excuse my bad programming style.
 
+___TODO___
+
+-> Implement remote control over network
+-> Implement adress translation
+-> Implement presets
+-> Implement error handling
+
 Changelog:
+
+2017-06-22
+Working copy, including github into Qt Creator.
 
 2016-11-28
 Initial release. 
 - Phantom Power (P48) working.
 - Gain Setting working.
-
-To-Do:
-
-
-- Update GUI when changing settings on device
-- Presets
-- Support of two or more units in one chain
