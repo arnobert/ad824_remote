@@ -1,5 +1,6 @@
 /*
 Yamaha AD824 8-Channel Mic Preamp Remote Control - Main Window
+
 Copyright (C) 2016, 2017 Arno Daeuper - arno.daeuper@mykolab.com
 
 This program is free software: you can redistribute it and/or modify
